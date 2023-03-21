@@ -68,8 +68,8 @@ func makeEndpoint(lo ListOutput, method string) string {
 }
 
 func handleResponse(response *http.Response) (string, error) {
-	if response.StatusCode < 200 || response.StatusCode >= 400 {
-		return "", fmt.Errorf("%s", response.Status)
+	if (response.StatusCode < 200 || response.StatusCode >= 400) && response.StatusCode > 500 {
+		return "", fmt.Errorf("error %s", response.Status)
 	}
 
 	rb, err := io.ReadAll(response.Body)
